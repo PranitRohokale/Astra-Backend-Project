@@ -1,0 +1,845 @@
+openapi : 3.0.0
+info:
+  title: School Management System
+  description: This is an detail documentation for school management server api developed by Pranit Rohokale
+  version: 1.0.0
+  contact:
+    email : pranitrohokale@gmail.com
+
+servers:
+  - url: "http://localhost:4000/api/v1"
+    description: for localhost - regular
+#   - url: "https://localhost:4000/api/v1"
+#     description: for localhost - scure
+
+
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
+      type: apiKey
+      in: cookie
+      name: token
+
+security:
+  - bearerAuth: []
+
+paths:
+  #Class Token
+  #create class
+  /class/create:
+    post:
+      tags:
+        - Class
+      summary: create new class , class name must be unique
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                standard:
+                  type: string
+                
+      responses:
+        200:
+          description: newly created class info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  createdAt:
+                    type: string
+                  noofstudents:
+                    type: number  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  #get All classes
+  /allclasses:
+    get:
+      tags:
+        - Class
+      summary: get all available class in array
+      produces:
+        - application/json
+      responses:
+        200:
+          description: return array of object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  credit:
+                    type: bumber  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  #get clas details info
+  /class/{classId}/info:
+    get:
+      tags:
+        - Class
+      summary: get all detail of provided class
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+ 
+      responses:
+        200:
+          description: return  object of course info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  noofstudents:
+                    type: bumber  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  #update class
+  /class/{classId}/update:
+    put:
+      tags:
+        - Class
+      summary: update existing class info
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                standard:
+                  type: string
+      responses:
+        200:
+          description: return  object of updated course info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  noofstudents:
+                    type: number  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # get list of all students in particular class
+  /class/{classId}/students:
+    get:
+      tags:
+        - Class
+      summary: gget list of all students in particular class
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+ 
+      responses:
+        200:
+          description: return  array of student info object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  _classId:
+                    type: bumber  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+
+
+  #Students Routes
+  /student/signup:
+    post:
+      tags:
+        - Student
+      summary: adds a new course to existing courses
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                standard:
+                  type: string
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /student/signin:
+    post:
+      tags:
+        - Student
+      summary: adds a new course to existing courses
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
+  /student/{studentId}/info:
+    get:
+      tags:
+        - Student
+      summary: returns all student information
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: return json format student information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
+  # update student
+  /student/{studentId}/update:
+    put:
+      tags:
+        - Student
+      summary: Update the existing student info
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                standard:
+                  type: string
+      responses:
+        200:
+          description: returns object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  #enroll class
+  /student/{studentId}/class/{classId}/enroll:
+    patch:
+      tags:
+        - Student
+      summary: Entroll the class whosse class id pass as parameter
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      requestBody:
+        required: true
+      responses:
+        200:
+          description: returns object && with success status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # get myclass
+  /student/{studentId}/myclass:
+    get:
+      tags:
+        - Student
+      summary: returns info of student enroll class
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: return json format class information that student enrolled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
+
+  #unenroll class
+  /student/{studentId}/class/unenroll:
+    patch:
+      tags:
+        - Student
+      summary: inEntroll the class for current user
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+        
+      produces:
+        - application/json
+      requestBody:
+        required: true
+      responses:
+        200:
+          description: returns object && with success status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  standard:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+
+  # course Routes
+  #create Course
+  /course/create:
+    post:
+      tags:
+        - Course
+      summary: create new course , course name must be unique
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                credit:
+                  type: number
+                
+      responses:
+        200:
+          description: newly created course info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  credit:
+                    type: number  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # get all courses
+  /courses/all:
+    get:
+      tags:
+        - Course
+      summary: get all available courses inn array
+      produces:
+        - application/json
+      responses:
+        200:
+          description: return array of object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  credit:
+                    type: bumber  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  #get info of course
+  /course/{courseId}/info:
+    get:
+      tags:
+        - Course
+      summary: get all infor of provided course
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+ 
+      responses:
+        200:
+          description: return  object of course info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  credit:
+                    type: bumber  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # update exitsing course
+  /course/{courseId}/update:
+    put:
+      tags:
+        - Course
+      summary: update existing course info
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                credit:
+                  type: number
+      responses:
+        200:
+          description: return  object of updated course info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  credit:
+                    type: number  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+
+  #Teacher Router
+  /teacher/signup:
+    post:
+      tags:
+        - Teacher
+      summary: Register new Teacher
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+            
+      responses:
+        200:
+          description: Areturn created object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  token:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /teacher/signin:
+    post:
+      tags:
+        - Teacher
+      summary: login teacher & return token & set cookie
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: return teacher info along with bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  token:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
+  /teacher/{teacherId}/info:
+    get:
+      tags:
+        - Teacher
+      summary: return teacher detailed info
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: return teacher detailed info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+    
+  
