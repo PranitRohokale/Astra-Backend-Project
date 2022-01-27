@@ -10,8 +10,8 @@ info:
 servers:
   - url: "https://astraschool.herokuapp.com/api/v1"
     description: for hosted - scure (production)
-  # - url: "http://localhost:4000/api/v1"
-  #   description: for localhost - regular (Development)
+  - url: "http://localhost:4000/api/v1"
+    description: for localhost - regular (Development)
 
 
 components:

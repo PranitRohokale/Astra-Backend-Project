@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "for a school management system which involves modules like Students,",
   "main": "Classes, Teachers, Courses",
+  "proxy":"https://astraschool.herokuapp.com/",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -17,6 +18,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^14.3.0",
     "express": "^4.17.2",
     "express-jwt": "^6.1.0",
