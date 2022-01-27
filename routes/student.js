@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //importing 
-const { getStudentInfo,updateStudentInfo, signup, signin, enrollClass, unEnrollClass, getMyClass } = require("../controllers/studentController");
+const { getStudentInfo,updateStudentInfo, signup, signin, enrollClass, unEnrollClass, getMyClass, removeStudent } = require("../controllers/studentController");
 const { getStudentById, isSignedIn, isAutheticated } = require("../middlewares/student");
 const {getClassById} = require("../middlewares/class")
 
@@ -16,7 +16,10 @@ router.route("/student/:studentId/update").put( isSignedIn, isAutheticated , upd
 router.route("/student/:studentId/myclass").get( isSignedIn, isAutheticated , getMyClass);
 
 //enroll class
-router.route("/student/:studentId/class/:classId/enroll").patch( isSignedIn, isAutheticated , enrollClass);
-router.route("/student/:studentId/class/unenroll").patch( isSignedIn, isAutheticated , unEnrollClass);
+router.route("/student/:studentId/class/:classId/enroll").patch( isSignedIn , enrollClass);
+router.route("/student/:studentId/class/unenroll").patch( isSignedIn , unEnrollClass);
+
+//romove student
+router.route("/student/:studentId/delete").delete( isSignedIn,  removeStudent);
 
 module.exports = router;

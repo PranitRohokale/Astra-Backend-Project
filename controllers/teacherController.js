@@ -38,7 +38,7 @@ exports.signup = async (req, res) => {
 
     //setting token in cookies
     const options = {
-      expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + 1*24 * 60 * 60 * 1000),
       httpOnly: true,
     };
 
@@ -80,7 +80,7 @@ exports.signin = async (req, res) => {
     );
     //setting token in cookies
     const options = {
-      expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + 1 *24* 60 * 60 * 1000),
       httpOnly: true,
     };
     isTeacherExists.password = undefined; //hiding pass
@@ -98,4 +98,19 @@ exports.getTeacherInfo = async (req, res) => {
     res.status(200).json({
       Teacher: req.profile,
     });
+  };
+
+  exports.removeTeacher = async (req, res) => {
+    try {
+      await Teacher.findByIdAndRemove(req.profile._id)
+        .then((data) => {
+          return res.status(200).json({
+            success: true,
+            message: `${req.profile.name} Teacher removed successfully!`,
+          });
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log("error in removing Teacher");
+    }
   };

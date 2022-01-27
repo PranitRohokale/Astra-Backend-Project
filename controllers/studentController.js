@@ -154,6 +154,7 @@ exports.enrollClass = async (req, res) => {
     await Student.save();
     Class.incrementStudent();
     await Class.save();
+
     res.status(200).json({
       success: true,
       message: "New Class Entrolled",
@@ -167,15 +168,15 @@ exports.enrollClass = async (req, res) => {
 exports.unEnrollClass = async (req, res) => {
   try {
     const Student = req.profile;
-    const classId = req._classId;
+    const classId = req.profile._classId;
     if (!classId)
-      return res.status(400).json({ message: "haven't entrolled any class" });
+      return res.status(400).json({ message: "haven't entrolled any class yet" });
 
     const isClassExits = await Class.findById(classId)
       .then((data) => data)
       .catch((error) => console.log(error));
     if (!isClassExits)
-      return res.status(401).json({ message: "Class is No more available" });
+      return res.status(401).json({ message: "Class is No more exists" });
 
     Student._classId = null;
     await Student.save();
@@ -201,9 +202,24 @@ exports.getMyClass = async (req, res) => {
         .status(2001)
         .json({ message: "opps! you haven't enroll in any class" });
     }
-    const isClassExits = await Class.findById(classId)
+    const isClassExits = await Class.findById(classId);
     res.status(200).json({ yourClassInfo: isClassExits });
   } catch (error) {
     console.log("error in getting myclass", error);
+  }
+};
+
+exports.removeStudent = async (req, res) => {
+  try {
+    await Student.findByIdAndRemove(req.profile._id)
+      .then((data) => {
+        return res.status(200).json({
+          success: true,
+          message: `${req.profile.name} student removed successfully!`,
+        });
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log("error in removing student");
   }
 };

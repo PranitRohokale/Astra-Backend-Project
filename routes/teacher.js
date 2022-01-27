@@ -3,6 +3,7 @@ const {
   signup,
   signin,
   getTeacherInfo,
+  removeTeacher,
 } = require("../controllers/teacherController");
 const {
   getTeacherById,
@@ -19,6 +20,7 @@ router.route("/teacher/signup").post(signup);
 router.route("/teacher/signin").post(signin);
 router
   .route("/teacher/:teacherId/info")
-  .get(isSignedIn, isAutheticated, getTeacherInfo);
+  .get(isSignedIn, getTeacherInfo);
 
+router.route("/teacher/:teacherId/delete").delete(isSignedIn,removeTeacher)
 module.exports = router;

@@ -35,7 +35,7 @@ exports.createCourse = async (req, res) => {
   }
 };
 exports.getAllCourses = async (req, res) => {
-  const allCourses = await Course.findOne();
+  const allCourses = await Course.find();
 
   res.status(200).json({
     numberOfTotalCourse: allCourses ? allCourses.length : 0,
@@ -80,5 +80,20 @@ exports.updateCourse = async (req, res) => {
     console.log("sending");
   } catch (error) {
     console.log("error in Updation of course");
+  }
+};
+
+exports.removeCourse = async (req, res) => {
+  try {
+    await Course.findByIdAndRemove(req.course._id)
+      .then((data) => {
+        return res.status(200).json({
+          success: true,
+          message: `${req.course.name} Course removed successfully!`,
+        });
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log("error in removing Course");
   }
 };

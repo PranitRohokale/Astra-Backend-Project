@@ -1,16 +1,17 @@
 openapi : 3.0.0
 info:
   title: School Management System
-  description: This is an detail documentation for school management server api developed by Pranit Rohokale
+  description: This is an detail documentation for school management server(Astra Project) api developed by Pranit Rohokale . [This Project mind map](https://res.cloudinary.com/durxdahel/image/upload/v1643278657/mindmap_tbwqug.jpg)
   version: 1.0.0
   contact:
     email : pranitrohokale@gmail.com
+    url : https://github.com/PranitRohokale
 
 servers:
-  - url: "http://localhost:4000/api/v1"
-    description: for localhost - regular
-#   - url: "https://localhost:4000/api/v1"
-#     description: for localhost - scure
+  - url: "https://astraschool.herokuapp.com/api/v1"
+    description: for hosted - scure (production)
+  # - url: "http://localhost:4000/api/v1"
+  #   description: for localhost - regular (Development)
 
 
 components:
@@ -438,8 +439,6 @@ paths:
             type: string
       produces:
         - application/json
-      requestBody:
-        required: true
       responses:
         200:
           description: returns object && with success status
@@ -463,6 +462,35 @@ paths:
           description: Bad request
         500:
           description: internal server error
+
+  #remove student
+  /student/{studentId}/delete:
+    delete:
+      tags:
+        - Student
+      summary: remove the entrire student info from Db
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: remove the entrire student info from Db
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
 
   # get myclass
   /student/{studentId}/myclass:
@@ -515,8 +543,6 @@ paths:
         
       produces:
         - application/json
-      requestBody:
-        required: true
       responses:
         200:
           description: returns object && with success status
@@ -711,6 +737,34 @@ paths:
         500:
           description: internal server error
 
+  #delete course
+  /course/{courseId}/delete:
+    delete:
+      tags:
+        - Course
+      summary: remove the entrire Course info from Db
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: remove the Course student info from Db
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
 
   #Teacher Router
   /teacher/signup:
@@ -841,5 +895,5 @@ paths:
           description: Bad request
         500:
           description: internal server error
-    
+  
   

@@ -30,7 +30,7 @@ exports.getStudentById = (req, res, next, id) => {
 // });
 
 exports.isSignedIn = (req, res, next) => {
-  console.log(req.cookies);
+  // console.log(req.cookies);
   const token =
     req.cookies.token ||
     req.body.token ||
