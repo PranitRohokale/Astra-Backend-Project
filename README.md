@@ -14,11 +14,16 @@ Classes, Teachers, Courses etc.
 - Additionally:
     1. Authentication
     2. API documentation
+#####  [My Swagger Doc Link](https://astraschool.herokuapp.com/api-docs)
 
 ### 📱 Mindmap of Project
    <img src="https://github.com/PranitRohokale/Astra-Backend-Project/blob/main/images/mindmap.jpg" width="1050" alt="mindmap">
+   
 ### 📚 API Documentation
     - Detail Documentation is created for all API's using swagger.
+    
+   <img src="https://github.com/PranitRohokale/Astra-Backend-Project/blob/main/images/Swagger%20UI%20-%20gif.gif" width="1050" alt="documentation">
+   <hr/>
    <img src="https://github.com/PranitRohokale/Astra-Backend-Project/blob/main/images/swaggerpic.png" width="1050" alt="documentation">
    
 -  [Documentation Link](https://astraschool.herokuapp.com/api-docs)
